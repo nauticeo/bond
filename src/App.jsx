@@ -8,7 +8,7 @@ import { Plus, X, Share2, Check, Trash2, ChevronLeft, ArrowRight, Minus } from "
        const WAITLIST_URL = "https://tally.so/r/abc123";
    Until you do, every "Get the collar" button shows a note to you instead.
    ------------------------------------------------------------------------- */
-const WAITLIST_URL = "";
+const WAITLIST_URL = "https://tally.so/r/J9b1zz";
 const CONTACT_EMAIL = "hello@bondcollar.com";
 /* ------------------------------------------------------------------------- */
 
