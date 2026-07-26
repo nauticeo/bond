@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Plus, X, Share2, Check, Trash2, ChevronLeft, ArrowUpRight } from "lucide-react";
+import { Plus, X, Share2, Check, Trash2, ChevronLeft } from "lucide-react";
 
 /* ============================================================================
    BOND
@@ -9,7 +9,7 @@ import { Plus, X, Share2, Check, Trash2, ChevronLeft, ArrowUpRight } from "lucid
        const WAITLIST_URL = "https://tally.so/r/abc123";
    Until you do, the waitlist card stays hidden. Nothing else breaks.
    ------------------------------------------------------------------------- */
-const WAITLIST_URL = "https://tally.so/r/J9b1zz";
+const WAITLIST_URL = "";
 /* ------------------------------------------------------------------------- */
 
 /*  The engine below is unchanged and tested. Anchors it must hold:
@@ -306,19 +306,99 @@ function Header({ pets, activeId, onPick, onAdd, showPets }) {
   );
 }
 
+/* --- The landing page ----------------------------------------------------
+   The app is free and always will be. The collar is the product. So this
+   screen sells the collar and offers the app as proof the idea works —
+   not the other way round. */
+
 function Welcome({ onAdd }) {
   return (
     <div className="bd-welcome">
-      <p className="bd-eyebrow">Time moves differently for them</p>
+      <p className="bd-eyebrow">A collar that celebrates on their clock</p>
       <h1 className="bd-display">
-        A golden retriever turns fifty<br />somewhere in her fifth year.
+        Your dog turns fifty<br />next Tuesday.
       </h1>
       <p className="bd-lede">
-        Nobody tells you that. Bond works out where your pet actually is on their
-        own clock, and marks every year they reach.
+        Nobody tells you. A dog is already 31 at their first birthday, and after
+        that they gain four of our years every twelve months. Bond is a collar
+        that <b>lights up on the evening they reach one</b> — so the day doesn't
+        pass without anyone noticing.
       </p>
-      <button className="bd-btn" onClick={onAdd}>Add your pet</button>
-      <p className="bd-fine bd-center">Free. No account. Nothing leaves your phone.</p>
+
+      <Want line="Want one? Tell me where to email you." />
+
+      <p className="bd-or">
+        Or work out your own pet's age first — free, no sign-up, takes ten seconds.
+      </p>
+      <button className="bd-btn bd-btn-quiet" onClick={onAdd}>Try it with my pet</button>
+
+      <ol className="bd-how">
+        <li>
+          <h3>It glows on the day</h3>
+          <p>Three hours from dusk, on your pet's neck, in a colour that tells you
+             which kind of day it is. Everyone at the park sees it.</p>
+        </li>
+        <li>
+          <h3>The rest of the year it's a safety light</h3>
+          <p>Rechargeable, five colours, steady or blinking. The reason it stays on
+             the dog for the 360 days that aren't milestones.</p>
+        </li>
+        <li>
+          <h3>Your phone does the thinking</h3>
+          <p>The free app works out the year ahead and hands the collar a short list
+             of dates. No subscription, ever. Nothing to pay after you buy it.</p>
+        </li>
+      </ol>
+
+      <div className="bd-facts">
+        <h2 className="bd-label">The collar</h2>
+        <dl>
+          <div><dt>Price</dt><dd>$89, shipping included</dd></div>
+          <div><dt>First run</dt><dd>250 collars</dd></div>
+          <div><dt>Ships</dt><dd>March 2027</dd></div>
+          <div><dt>Subscription</dt><dd>None. Not now, not later.</dd></div>
+          <div><dt>Sizes</dt><dd>Small, medium, large</dd></div>
+        </dl>
+        <p className="bd-fine">
+          I'm one person making these. Nothing is charged today — the form just tells
+          me you're interested and gets you the email when they're ready to order.
+        </p>
+      </div>
+
+      <div className="bd-credible">
+        <h2 className="bd-label">Not the seven-year thing</h2>
+        <p>
+          Multiplying by seven has no scientific basis — it seems to have started as a
+          1950s marketing line to get people booking annual check-ups. Bond uses the
+          2020 epigenetic clock from UC San Diego, built by reading DNA methylation in
+          104 Labradors, and the 2021 AAHA/AAFP veterinary guidelines for cats. Ten
+          other species are modelled from published longevity data and clearly labelled
+          as estimates.
+        </p>
+      </div>
+
+      <Want line="Still here? Then you probably want one." />
+    </div>
+  );
+}
+
+/* The ask, stated plainly, more than once. */
+function Want({ line }) {
+  if (!WAITLIST_URL) {
+    return (
+      <div className="bd-want bd-want-off">
+        <p><b>Waitlist not connected yet.</b> Paste your Tally link into
+        <code> WAITLIST_URL</code> at the top of App.jsx and this becomes the button.</p>
+      </div>
+    );
+  }
+  return (
+    <div className="bd-want">
+      <p className="bd-want-line">{line}</p>
+      <a className="bd-btn" href={WAITLIST_URL} target="_blank" rel="noreferrer">
+        Yes — email me when the collar's ready
+      </a>
+      <p className="bd-want-fine">$89 · ships March 2027 · nothing charged today</p>
     </div>
   );
 }
@@ -377,15 +457,16 @@ function Home({ pet, now, onShare, onRemove, onUpdate }) {
 
       <Collar pet={pet} onUpdate={onUpdate} />
 
-      {WAITLIST_URL && (
-        <a className="bd-waitlist" href={WAITLIST_URL} target="_blank" rel="noreferrer">
-          <span className="bd-waitlist-txt">
-            <strong>The collar</strong>
-            It lights up on the evening they reach one of these.
-          </span>
-          <ArrowUpRight size={17} />
-        </a>
-      )}
+      <div className="bd-pitch">
+        <p className="bd-pitch-lead">
+          {year.length > 0
+            ? <>That's <b>{year.length} evening{year.length === 1 ? "" : "s"}</b> in the next
+               twelve months when {pet.name} reaches something. The collar lights up on every
+               one of them.</>
+            : <>The collar lights up on the evening {pet.name} reaches a milestone.</>}
+        </p>
+        <Want line="Want one for them?" />
+      </div>
 
       <button className="bd-remove" onClick={() => {
         if (window.confirm(`Remove ${pet.name}? Their timeline is cleared from this device.`))
@@ -716,7 +797,48 @@ function Styles() {
 .bd-pet.on{ background:var(--oat); color:var(--moss); border-color:var(--oat); font-weight:600; }
 .bd-pet-add{ display:flex; align-items:center; padding:6px 10px; }
 
-.bd-welcome{ padding:34px 0; }
+.bd-welcome{ padding:30px 0; }
+.bd-lede b{ color:var(--oat); font-weight:600; }
+.bd-or{ text-align:center; font-size:13px; color:var(--lichen); margin:26px 0 11px; line-height:1.55; }
+
+/* the ask */
+.bd-want{ background:var(--pine); border:1px solid var(--bark); border-radius:14px;
+  padding:20px; margin:4px 0; }
+.bd-want-line{ font-family:'Petrona',serif; font-size:19px; font-weight:500;
+  line-height:1.3; margin:0 0 15px; letter-spacing:-0.01em; }
+.bd-want-fine{ text-align:center; font-family:'Azeret Mono',monospace; font-size:9.5px;
+  letter-spacing:.09em; text-transform:uppercase; color:var(--dim); margin:12px 0 0; }
+.bd-want-off{ border-style:dashed; border-color:var(--brass); }
+.bd-want-off p{ font-size:12.5px; line-height:1.6; color:var(--brass); margin:0; }
+.bd-want-off code{ font-family:'Azeret Mono',monospace; font-size:11px; }
+a.bd-btn{ text-decoration:none; }
+.bd-btn-quiet{ background:transparent; border:1px solid var(--bark); color:var(--oat);
+  font-weight:500; }
+.bd-btn-quiet:hover{ background:var(--pine); border-color:var(--lichen); }
+
+/* how it works */
+.bd-how{ list-style:none; margin:40px 0; padding:0; }
+.bd-how li{ padding:0 0 22px 0; border-bottom:1px solid var(--bark); margin-bottom:22px; }
+.bd-how li:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.bd-how h3{ font-family:'Petrona',serif; font-size:18px; font-weight:500; margin:0 0 7px;
+  letter-spacing:-0.01em; }
+.bd-how p{ font-size:13.5px; line-height:1.6; color:var(--lichen); margin:0; }
+
+/* spec table */
+.bd-facts{ margin:34px 0; }
+.bd-facts dl{ margin:0 0 14px; }
+.bd-facts dl>div{ display:flex; justify-content:space-between; gap:16px; padding:11px 0;
+  border-bottom:1px solid var(--bark); }
+.bd-facts dt{ font-size:13px; color:var(--lichen); }
+.bd-facts dd{ font-size:13px; margin:0; text-align:right; }
+
+.bd-credible{ margin:34px 0; }
+.bd-credible p{ font-size:13px; line-height:1.65; color:var(--lichen); margin:0; }
+
+/* in-app pitch */
+.bd-pitch{ margin:0 0 30px; }
+.bd-pitch-lead{ font-size:14px; line-height:1.6; color:var(--lichen); margin:0 0 15px; }
+.bd-pitch-lead b{ color:var(--oat); font-weight:600; }
 
 .bd-btn{ display:flex; align-items:center; justify-content:center; gap:7px; width:100%;
   padding:15px; border-radius:10px; background:var(--brass); color:#1B1405;
