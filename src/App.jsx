@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Plus, X, Share2, Check, Trash2, ChevronLeft, ArrowRight, Minus } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 
 /* ============================================================================
    BOND
@@ -274,6 +275,7 @@ export default function BondApp() {
   return (
     <div className="bd">
       <Styles />
+       <Analytics />
       <Nav onHome={() => { setView(pets.length ? "app" : "home"); scrollTop(); }}
         showApp={pets.length > 0 && view === "home"}
         onApp={() => { setView("app"); scrollTop(); }} />
