@@ -8,8 +8,16 @@ import { Plus, X, Share2, Check, Trash2, ChevronLeft, ArrowRight, Minus } from "
        const WAITLIST_URL = "https://tally.so/r/abc123";
    Until you do, every "Get the collar" button shows a note to you instead.
    ------------------------------------------------------------------------- */
-const WAITLIST_URL = "https://tally.so/r/J9b1zz";
+const WAITLIST_URL = "";
 const CONTACT_EMAIL = "hello@bondcollar.com";
+
+/* ── THE HERO PHOTO ────────────────────────────────────────────────────────
+   Put a real photograph of a dog here and the whole site levels up. Drop the
+   file in /public and set the path, e.g.  "/hero.jpg"
+   Leave empty and you get the product drawing instead — which is fine, but a
+   photo of an actual animal is what makes people feel something.
+   ------------------------------------------------------------------------- */
+const HERO_PHOTO = "";
 /* ------------------------------------------------------------------------- */
 
 /*  Engine — unchanged and tested. Anchors it must hold:
@@ -109,23 +117,25 @@ function milestoneStep(pet, ageYears) {
 /* The four kinds of day. Plain-English meanings — these strings appear on the
    landing page AND in the app, so a person meets the colour language before
    they ever see a coloured dot. */
+/* The two calendars. Your pet keeps one and you keep another — that single
+   idea is what makes the colours legible, so it's named everywhere. */
 const KIND = {
-  milestone: { name: "Milestone",  hex: "#D9A441", light: "#B8862C",
-               plain: "A new number on their clock",
+  milestone: { name: "Birthday",     cal: "theirs", hex: "#D9A441",
+               plain: "They turn a year older on their calendar",
                detail: "The everyday one. A dog gets about five a year.",
-               pattern: "Slow breathing pulse, three hours from dusk" },
-  decade:    { name: "Big number", hex: "#C4573A", light: "#A6432A",
+               pattern: "Slow breathing pulse" },
+  decade:    { name: "Big birthday", cal: "theirs", hex: "#C4573A",
                plain: "A round number — 50th, 60th, 70th",
                detail: "Rarer, and worth a bigger fuss.",
                pattern: "Bright rise, then holds" },
-  birthday:  { name: "Birthday",   hex: "#B87BA4", light: "#9A5C86",
-               plain: "The actual date they were born",
-               detail: "Once a year, same as yours.",
-               pattern: "Slow colour cycle for three minutes" },
-  stage:     { name: "Life stage", hex: "#6F9DB2", light: "#4E7E94",
+  stage:     { name: "New chapter",  cal: "theirs", hex: "#6F9DB2",
                plain: "Puppy to adult, adult to senior",
-               detail: "Only a handful in a whole life. Worth telling your vet.",
+               detail: "Only a handful in a whole life. Tell your vet.",
                pattern: "Two slow sweeps" },
+  birthday:  { name: "Anniversary",  cal: "yours",  hex: "#B87BA4",
+               plain: "The date they were born, on your calendar",
+               detail: "Once a year, same as yours.",
+               pattern: "Slow colour cycle" },
 };
 
 const NIGHT_COLORS = [
@@ -296,7 +306,7 @@ function Nav({ onHome, showApp, onApp }) {
   return (
     <header className="bd-nav">
       <div className="bd-nav-in">
-        <button className="bd-logo" onClick={onHome}>Bond</button>
+        <button className="bd-logo" onClick={onHome}><Wordmark size={24} /></button>
         <div className="bd-nav-r">
           {showApp && <button className="bd-nav-link" onClick={onApp}>My pets</button>}
           <Buy small label="Get the collar" />
@@ -324,49 +334,76 @@ function Buy({ small, label = "Get the collar — $89", block }) {
   );
 }
 
+/* --- Wordmark -------------------------------------------------------------
+   The O is the ring: the loop of the collar, the D-ring, the tag hole, and
+   the light all at once. One letter carrying the whole product. */
+
+function Wordmark({ size = 22, glow = true }) {
+  return (
+    <span className="bd-wm" style={{ fontSize: size }}>
+      B<span className={"bd-wm-o" + (glow ? " lit" : "")} aria-hidden="true" />nd
+      <span className="bd-sr">Bond</span>
+    </span>
+  );
+}
+
 /* --- The product, drawn ---------------------------------------------------
-   No photograph exists yet, so this is the product: a collar seen head-on,
-   light pipe lit, brass tag hanging. Without a picture of the thing you are
-   selling, a store reads as vapour. */
+   A flat lay, the way a catalogue shoots a collar: strap laid straight,
+   stitching, buckle, keeper, D-ring, tag, and the light running through it.
+   Reads as a product drawing rather than as an attempt at a photograph. */
 
 function CollarArt({ glow = "#D9A441", lit = true }) {
   return (
-    <svg viewBox="0 0 340 300" className="bd-art" role="img"
-      aria-label="A dog collar with a lit strip running through it and an engraved brass tag hanging from the front">
+    <svg viewBox="0 0 420 210" className="bd-art" role="img"
+      aria-label="A Bond collar laid flat: webbing strap with a lit strip running through it, a metal buckle, and an engraved brass tag">
       <defs>
-        <linearGradient id="bdStrap" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#3A4F42" /><stop offset=".5" stopColor="#2B3D33" />
-          <stop offset="1" stopColor="#1C2A22" />
+        <linearGradient id="bdWeb" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#40584A" /><stop offset=".45" stopColor="#2E4137" />
+          <stop offset="1" stopColor="#1B2A22" />
+        </linearGradient>
+        <linearGradient id="bdMetal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#D8C68F" /><stop offset=".5" stopColor="#9E8A54" />
+          <stop offset="1" stopColor="#6E5F38" />
         </linearGradient>
         <linearGradient id="bdBrass" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#EBCE85" /><stop offset=".38" stopColor="#CBA044" />
-          <stop offset=".72" stopColor="#A87C24" /><stop offset="1" stopColor="#DCBA62" />
+          <stop offset="0" stopColor="#EDD189" /><stop offset=".36" stopColor="#CBA044" />
+          <stop offset=".7" stopColor="#A67B23" /><stop offset="1" stopColor="#DEBD66" />
         </linearGradient>
-        <filter id="bdGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="7" result="b" />
+        <filter id="bdLit" x="-40%" y="-160%" width="180%" height="420%">
+          <feGaussianBlur stdDeviation="6" result="b" />
           <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
       </defs>
 
       {/* strap */}
-      <ellipse cx="170" cy="128" rx="118" ry="96" fill="none" stroke="url(#bdStrap)" strokeWidth="26" />
-      <ellipse cx="170" cy="128" rx="118" ry="96" fill="none" stroke="#465C4D"
-        strokeWidth="26" strokeDasharray="1 4" opacity=".5" />
-
+      <rect x="30" y="58" width="360" height="34" rx="17" fill="url(#bdWeb)" />
+      {/* stitching */}
+      <line x1="46" y1="66" x2="374" y2="66" stroke="#5A7263" strokeWidth="1.4"
+        strokeDasharray="5 5" opacity=".75" />
+      <line x1="46" y1="84" x2="374" y2="84" stroke="#5A7263" strokeWidth="1.4"
+        strokeDasharray="5 5" opacity=".75" />
       {/* light pipe */}
-      <ellipse cx="170" cy="128" rx="118" ry="96" fill="none"
-        stroke={lit ? glow : "#22332A"} strokeWidth="7"
-        filter={lit ? "url(#bdGlow)" : undefined} opacity={lit ? ".96" : "1"} />
+      <line x1="52" y1="75" x2="368" y2="75" stroke={lit ? glow : "#22332A"}
+        strokeWidth="6" strokeLinecap="round" filter={lit ? "url(#bdLit)" : undefined} />
 
       {/* buckle */}
-      <rect x="150" y="14" width="40" height="26" rx="7" fill="none" stroke="#8A7440" strokeWidth="4" />
-      <line x1="170" y1="14" x2="170" y2="40" stroke="#8A7440" strokeWidth="4" />
+      <rect x="86" y="48" width="46" height="54" rx="9" fill="none"
+        stroke="url(#bdMetal)" strokeWidth="7" />
+      <line x1="109" y1="48" x2="109" y2="102" stroke="url(#bdMetal)" strokeWidth="6" />
+      <line x1="109" y1="75" x2="150" y2="75" stroke="url(#bdMetal)" strokeWidth="5"
+        strokeLinecap="round" />
+      {/* keeper loop */}
+      <rect x="168" y="54" width="15" height="42" rx="6" fill="none" stroke="#4A6153" strokeWidth="5" />
+      {/* adjustment holes */}
+      {[236, 262, 288, 314].map((x) => (
+        <circle key={x} cx={x} cy="75" r="4" fill="#131F19" opacity=".55" />
+      ))}
 
       {/* D-ring + tag */}
-      <circle cx="170" cy="222" r="11" fill="none" stroke="#8A7440" strokeWidth="4" />
-      <rect x="139" y="231" width="62" height="58" rx="12" fill="url(#bdBrass)" />
-      <circle cx="170" cy="242" r="4.5" fill="#16241D" />
-      <text x="170" y="277" textAnchor="middle" className="bd-art-num">58</text>
+      <path d="M262 92 a17 17 0 0 0 34 0" fill="none" stroke="url(#bdMetal)" strokeWidth="6" />
+      <rect x="248" y="118" width="62" height="60" rx="13" fill="url(#bdBrass)" />
+      <circle cx="279" cy="129" r="4.5" fill="#16241D" />
+      <text x="279" y="164" textAnchor="middle" className="bd-art-num">58</text>
     </svg>
   );
 }
@@ -396,7 +433,11 @@ function Landing({ onTry }) {
             </div>
             <p className="bd-tiny">$89 · ships March 2027 · nothing charged today</p>
           </div>
-          <div className="bd-hero-art"><CollarArt /></div>
+          <div className="bd-hero-art">
+            {HERO_PHOTO
+              ? <img className="bd-hero-img" src={HERO_PHOTO} alt="A dog wearing a Bond collar at dusk, the strip lit" />
+              : <CollarArt />}
+          </div>
         </div>
       </section>
 
@@ -460,26 +501,51 @@ function Landing({ onTry }) {
         </div>
       </section>
 
-      {/* 4. THE COLOUR LANGUAGE — taught before it's ever used */}
+      {/* 4. TWO CALENDARS — the idea that makes the colours legible */}
       <section className="bd-band-lt">
         <div className="bd-wrap">
-          <p className="bd-kicker">What the colours mean</p>
-          <h2 className="bd-h2">Four kinds of day.</h2>
+          <p className="bd-kicker">The idea</p>
+          <h2 className="bd-h2">Your pet keeps a different calendar.</h2>
           <p className="bd-body">
-            You'll know which one it is from across the room, without checking your phone.
+            On yours, they have one birthday a year. On theirs, a dog has about five — because
+            they pass through a year of life in roughly ten of your weeks. Both calendars are
+            real. Only one of them is on your fridge.
           </p>
-          <div className="bd-kinds">
-            {Object.entries(KIND).map(([k, v]) => (
-              <div key={k} className="bd-kind">
-                <span className="bd-kind-dot" style={{ background: v.hex, boxShadow: `0 0 16px ${v.hex}` }} />
-                <div>
-                  <p className="bd-kind-n">{v.name}</p>
-                  <p className="bd-kind-p">{v.plain}</p>
-                  <p className="bd-kind-d">{v.detail}</p>
-                  <p className="bd-kind-x">{v.pattern}</p>
+          <p className="bd-body"><b>Bond marks both, and the colour tells you which.</b></p>
+
+          <div className="bd-cals">
+            <div className="bd-cal">
+              <p className="bd-cal-h">Their calendar</p>
+              <p className="bd-cal-s">Roughly five to twelve days a year, depending on the animal.</p>
+              {Object.entries(KIND).filter(([, v]) => v.cal === "theirs").map(([k, v]) => (
+                <div key={k} className="bd-kind">
+                  <span className="bd-kind-dot" style={{ background: v.hex, boxShadow: `0 0 15px ${v.hex}` }} />
+                  <div>
+                    <p className="bd-kind-n">{v.name}</p>
+                    <p className="bd-kind-p">{v.plain}</p>
+                    <p className="bd-kind-d">{v.detail}</p>
+                  </div>
                 </div>
+              ))}
+            </div>
+            <div className="bd-cal">
+              <p className="bd-cal-h">Your calendar</p>
+              <p className="bd-cal-s">The one you already know. Once a year, same date.</p>
+              {Object.entries(KIND).filter(([, v]) => v.cal === "yours").map(([k, v]) => (
+                <div key={k} className="bd-kind">
+                  <span className="bd-kind-dot" style={{ background: v.hex, boxShadow: `0 0 15px ${v.hex}` }} />
+                  <div>
+                    <p className="bd-kind-n">{v.name}</p>
+                    <p className="bd-kind-p">{v.plain}</p>
+                    <p className="bd-kind-d">{v.detail}</p>
+                  </div>
+                </div>
+              ))}
+              <div className="bd-cal-note">
+                <p>So yes — most of what the collar lights up for <b>are</b> birthdays. Just
+                  birthdays counted the way your pet lives them, not the way you do.</p>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -578,7 +644,7 @@ function Footer({ onHome }) {
     <footer className="bd-foot">
       <div className="bd-wrap bd-foot-in">
         <div>
-          <button className="bd-logo bd-logo-sm" onClick={onHome}>Bond</button>
+          <button className="bd-logo" onClick={onHome}><Wordmark size={21} /></button>
           <p>A collar that celebrates on their clock.</p>
         </div>
         <div className="bd-foot-links">
@@ -674,7 +740,7 @@ function PetView({ pet, now, onShare, onRemove, onUpdate }) {
                   <span className="bd-bar" style={{ background: k.hex }} />
                   <span className="bd-item">
                     <b>{m.title}</b>
-                    <em>{k.name} · {m.sub}</em>
+                    <em><span style={{color:k.hex}}>{k.name}</span> · {m.sub}</em>
                   </span>
                   <button onClick={() => onShare({ pet, m })} aria-label={`Share: ${m.title}`}>
                     <Share2 size={13} />
@@ -767,13 +833,18 @@ function Collar({ pet, onUpdate }) {
       </div>
       {c.milestoneOn && (
         <div className="bd-open">
-          {Object.entries(KIND).map(([k, v]) => (
-            <button key={k} className="bd-leg" onClick={() => run(v.hex, "breathe")}>
-              <span style={{ background: v.hex }} />
-              <b>{v.name}</b>
-              <em>{v.plain}</em>
-              <i>see it</i>
-            </button>
+          {["theirs", "yours"].map((cal) => (
+            <div key={cal} className="bd-leg-grp">
+              <p className="bd-leg-h">{cal === "theirs" ? "Their calendar" : "Your calendar"}</p>
+              {Object.entries(KIND).filter(([, v]) => v.cal === cal).map(([k, v]) => (
+                <button key={k} className="bd-leg" onClick={() => run(v.hex, "breathe")}>
+                  <span style={{ background: v.hex }} />
+                  <b>{v.name}</b>
+                  <em>{v.plain}</em>
+                  <i>see it</i>
+                </button>
+              ))}
+            </div>
           ))}
         </div>
       )}
@@ -962,11 +1033,20 @@ function Styles() {
   backdrop-filter:blur(10px); border-bottom:1px solid var(--bark); }
 .bd-nav-in{ max-width:1080px; margin:0 auto; padding:13px 24px; display:flex;
   align-items:center; justify-content:space-between; gap:16px; }
-.bd-logo{ font-family:'Petrona',serif; font-size:22px; font-weight:600; letter-spacing:-0.025em; }
-.bd-logo-sm{ font-size:19px; }
+.bd-logo{ display:inline-flex; align-items:center; padding:2px; }
+
+/* wordmark — the O is the ring */
+.bd-wm{ font-family:'Petrona',serif; font-weight:600; letter-spacing:.004em;
+  line-height:1; display:inline-flex; align-items:center; color:var(--oat); }
+.bd-wm-o{ display:inline-block; width:.6em; height:.6em; border-radius:50%;
+  border:.115em solid var(--brass); margin:0 .045em; position:relative; top:.045em; }
+.bd-wm-o.lit{ box-shadow:0 0 .55em rgba(217,164,65,.75), inset 0 0 .2em rgba(217,164,65,.35); }
+.bd-sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);
+  white-space:nowrap; }
 .bd-nav-r{ display:flex; align-items:center; gap:14px; }
-.bd-nav-link{ font-size:13.5px; color:var(--lichen); }
-.bd-nav-link:hover{ color:var(--oat); }
+.bd-nav-link{ font-size:13px; font-weight:600; color:var(--oat); padding:8px 13px;
+  border:1px solid var(--line); border-radius:8px; background:var(--pine); transition:.16s ease; }
+.bd-nav-link:hover{ border-color:var(--lichen); }
 
 /* buy button — one component, one set of words */
 .bd-buy{ display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -979,10 +1059,13 @@ function Styles() {
 .bd-buy:disabled{ opacity:.3; cursor:not-allowed; transform:none; }
 .bd-buy-off{ display:inline-block; padding:9px 14px; border:1px dashed var(--brass);
   border-radius:8px; font-family:'Azeret Mono',monospace; font-size:10px; color:var(--brass); }
+/* Secondary buttons carry a fill at rest. A transparent control that only
+   appears on hover doesn't read as a button, and doesn't exist at all on a
+   touchscreen, where there is no hover. */
 .bd-ghost{ display:inline-flex; align-items:center; justify-content:center; padding:15px 24px;
-  border-radius:10px; border:1px solid var(--line); font-size:15px; font-weight:500;
-  transition:.16s ease; }
-.bd-ghost:hover{ background:var(--pine); border-color:var(--lichen); }
+  border-radius:10px; border:1px solid var(--lichen); background:var(--bark);
+  color:var(--oat); font-size:15px; font-weight:600; transition:.16s ease; }
+.bd-ghost:hover{ background:#3A5245; border-color:var(--oat); transform:translateY(-1px); }
 
 /* hero */
 .bd-hero{ padding:56px 0 64px; border-bottom:1px solid var(--bark); }
@@ -1012,15 +1095,28 @@ function Styles() {
   letter-spacing:-0.01em; }
 .bd-feat p{ font-size:14.5px; line-height:1.62; color:var(--lichen); margin:0; }
 
+/* two calendars */
+.bd-cals{ display:grid; grid-template-columns:1.1fr .9fr; gap:34px; margin-top:34px;
+  align-items:start; }
+.bd-cal{ background:rgba(0,0,0,.035); border:1px solid var(--lt-2); border-radius:14px;
+  padding:24px; }
+.bd-cal-h{ font-family:'Petrona',serif; font-size:22px; font-weight:600; margin:0 0 5px; }
+.bd-cal-s{ font-size:13px; color:var(--lt-dim); margin:0 0 22px; }
+.bd-cal-note{ margin-top:18px; padding-top:18px; border-top:1px solid var(--lt-2); }
+.bd-cal-note p{ font-size:13.5px; line-height:1.6; color:var(--lt-dim); margin:0; }
+.bd-cal-note b{ color:var(--lt-ink); }
+.bd-hero-img{ width:100%; border-radius:16px; display:block; }
+.bd-leg-grp{ margin-bottom:14px; }
+.bd-leg-h{ font-family:'Azeret Mono',monospace; font-size:9.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--dim); margin:0 0 4px; }
+
 /* colour language */
-.bd-kinds{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:36px; }
-.bd-kind{ display:flex; gap:15px; align-items:flex-start; }
+.bd-kind{ display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
+.bd-kind:last-child{ margin-bottom:0; }
 .bd-kind-dot{ width:15px; height:15px; border-radius:50%; flex:none; margin-top:5px; }
 .bd-kind-n{ font-family:'Petrona',serif; font-size:19px; font-weight:600; margin:0 0 3px; }
 .bd-kind-p{ font-size:14.5px; margin:0 0 5px; color:var(--lt-ink); }
 .bd-kind-d{ font-size:13.5px; color:var(--lt-dim); margin:0 0 5px; line-height:1.55; }
-.bd-kind-x{ font-family:'Azeret Mono',monospace; font-size:10px; letter-spacing:.06em;
-  color:#9A7420; margin:0; }
 
 /* steps */
 .bd-steps{ list-style:none; margin:34px 0 0; padding:0; counter-reset:s; }
@@ -1043,7 +1139,10 @@ function Styles() {
 .bd-faq{ border-top:1px solid var(--lt-2); }
 .bd-fq{ border-bottom:1px solid var(--lt-2); }
 .bd-fq>button{ display:flex; width:100%; align-items:center; justify-content:space-between;
-  gap:16px; padding:15px 0; text-align:left; font-size:14.5px; font-weight:600; }
+  gap:16px; padding:15px 2px; text-align:left; font-size:14.5px; font-weight:600;
+  transition:.14s ease; }
+.bd-fq>button:hover{ color:#9A7420; }
+.bd-fq>button>svg{ flex:none; color:#9A7420; }
 .bd-fq>p{ font-size:14px; line-height:1.65; color:var(--lt-dim); margin:0 0 16px; }
 
 /* close */
@@ -1063,7 +1162,9 @@ function Styles() {
 /* ---- app view ---- */
 .bd-switch{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:26px; }
 .bd-tab{ padding:7px 14px; border-radius:99px; border:1px solid var(--line);
-  font-size:13px; color:var(--lichen); transition:.16s ease; }
+  background:var(--pine); font-size:13px; font-weight:500; color:var(--oat);
+  transition:.16s ease; }
+.bd-tab:hover{ border-color:var(--lichen); }
 .bd-tab.on{ background:var(--oat); color:var(--moss); border-color:var(--oat); font-weight:600; }
 .bd-tab-add{ display:flex; align-items:center; padding:7px 11px; }
 
@@ -1139,7 +1240,9 @@ function Styles() {
 .bd-dot.on{ opacity:1; border-color:var(--oat); box-shadow:0 0 15px var(--s); }
 .bd-seg{ display:flex; gap:6px; }
 .bd-seg-b{ flex:1; padding:11px 4px; border-radius:8px; border:1px solid var(--line);
-  font-size:12.5px; color:var(--lichen); transition:.16s ease; }
+  background:var(--pine); font-size:12.5px; font-weight:500; color:var(--oat);
+  transition:.16s ease; }
+.bd-seg-b:hover{ border-color:var(--lichen); }
 .bd-seg-b.on{ background:var(--bark); border-color:var(--oat); color:var(--oat); }
 
 .bd-leg{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:9px 0; }
@@ -1150,19 +1253,24 @@ function Styles() {
   font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:#5F7166; }
 .bd-leg:hover i{ color:var(--brass); }
 
-.bd-del{ display:flex; align-items:center; gap:6px; margin:0 auto; font-size:12.5px; color:#4F6157; }
+.bd-del{ display:flex; align-items:center; gap:6px; margin:0 auto; font-size:12.5px;
+  color:var(--lichen); border:1px solid var(--line); border-radius:8px; padding:9px 15px;
+  background:var(--pine); transition:.16s ease; }
 .bd-del:hover{ color:var(--rust); }
 
 /* form */
 .bd-form{ max-width:520px; }
-.bd-back{ display:flex; align-items:center; gap:3px; font-size:13.5px; color:var(--lichen);
-  margin-bottom:22px; }
+.bd-back{ display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:600;
+  color:var(--oat); background:var(--pine); border:1px solid var(--line); border-radius:8px;
+  padding:8px 13px; margin-bottom:24px; transition:.16s ease; }
+.bd-back:hover{ border-color:var(--lichen); }
 .bd-f{ display:block; margin-bottom:24px; }
 .bd-in{ width:100%; padding:14px; border-radius:9px; background:var(--pine);
   border:1px solid var(--line); color:var(--oat); font-size:15.5px; font-family:inherit; }
 .bd-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
 .bd-opt{ padding:13px 5px; border-radius:8px; background:var(--pine); border:1px solid var(--line);
-  font-size:13px; color:var(--lichen); transition:.16s ease; }
+  font-size:13px; font-weight:500; color:var(--oat); transition:.16s ease; }
+.bd-opt:hover{ border-color:var(--lichen); background:var(--bark); }
 .bd-opt.on{ background:var(--bark); border-color:var(--oat); color:var(--oat); font-weight:600; }
 .bd-chk{ display:flex; align-items:center; gap:10px; font-size:14px; color:var(--lichen);
   margin-bottom:22px; }
@@ -1193,7 +1301,7 @@ function Styles() {
 
 /* responsive */
 @media (max-width:860px){
-  .bd-hero-in,.bd-two,.bd-kinds,.bd-stats,.bd-sell{ grid-template-columns:1fr; }
+  .bd-hero-in,.bd-two,.bd-cals,.bd-stats,.bd-sell{ grid-template-columns:1fr; }
   .bd-hero{ padding:36px 0 44px; }
   .bd-hero-art{ order:-1; margin-bottom:14px; }
   .bd-art{ max-width:230px; }
