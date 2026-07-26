@@ -8,7 +8,7 @@ import { Plus, X, Share2, Check, Trash2, ChevronLeft, ArrowRight, Minus } from "
        const WAITLIST_URL = "https://tally.so/r/abc123";
    Until you do, every "Get the collar" button shows a note to you instead.
    ------------------------------------------------------------------------- */
-const WAITLIST_URL = "https://tally.so/r/J9b1zz";
+const WAITLIST_URL = "";
 const CONTACT_EMAIL = "hello@bondcollar.com";
 
 /* ── THE HERO PHOTO ────────────────────────────────────────────────────────
@@ -17,7 +17,7 @@ const CONTACT_EMAIL = "hello@bondcollar.com";
    Leave empty and you get the product drawing instead — which is fine, but a
    photo of an actual animal is what makes people feel something.
    ------------------------------------------------------------------------- */
-const HERO_PHOTO = "IMG_0918.JPG";
+const HERO_PHOTO = "";
 /* ------------------------------------------------------------------------- */
 
 /*  Engine — unchanged and tested. Anchors it must hold:
