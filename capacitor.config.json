@@ -1,0 +1,14 @@
+{
+  "appId": "co.bond.app",
+  "appName": "Bond",
+  "webDir": "dist",
+  "backgroundColor": "#10171C",
+  "ios":     { "contentInset": "always" },
+  "android": { "backgroundColor": "#10171C" },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_bond",
+      "iconColor": "#F2A93B"
+    }
+  }
+}

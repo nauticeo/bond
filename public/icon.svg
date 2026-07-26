@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#10171C"/>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#26333C" stroke-width="10"/>
+  <!-- milestone markers around the year -->
+  <circle cx="256" cy="106" r="13" fill="#F2A93B"/>
+  <circle cx="386" cy="181" r="8"  fill="#E4633A" opacity=".8"/>
+  <circle cx="386" cy="331" r="8"  fill="#C77DBE" opacity=".8"/>
+  <circle cx="256" cy="406" r="8"  fill="#F2A93B" opacity=".8"/>
+  <circle cx="126" cy="331" r="8"  fill="#4FB39A" opacity=".8"/>
+  <circle cx="126" cy="181" r="8"  fill="#F2A93B" opacity=".8"/>
+  <path d="M 256 106 A 150 150 0 0 1 386 181" fill="none" stroke="#F2A93B" stroke-width="12" stroke-linecap="round"/>
+</svg>
