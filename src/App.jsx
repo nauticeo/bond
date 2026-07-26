@@ -8,7 +8,7 @@ import { Plus, X, Share2, Check, Trash2, ChevronLeft, ArrowRight, Minus } from "
        const WAITLIST_URL = "https://tally.so/r/abc123";
    Until you do, every "Get the collar" button shows a note to you instead.
    ------------------------------------------------------------------------- */
-const WAITLIST_URL = "https://tally.so/r/J9b1zz";
+const WAITLIST_URL = "";
 const CONTACT_EMAIL = "hello@bondcollar.com";
 
 /* ── THE HERO PHOTO ────────────────────────────────────────────────────────
@@ -17,7 +17,7 @@ const CONTACT_EMAIL = "hello@bondcollar.com";
    Leave empty and you get the product drawing instead — which is fine, but a
    photo of an actual animal is what makes people feel something.
    ------------------------------------------------------------------------- */
-const HERO_PHOTO = "IMG_0918.JPG";
+const HERO_PHOTO = "";
 /* ------------------------------------------------------------------------- */
 
 /*  Engine — unchanged and tested. Anchors it must hold:
@@ -408,6 +408,92 @@ function CollarArt({ glow = "#D9A441", lit = true }) {
   );
 }
 
+/* --- Product concept -----------------------------------------------------
+   A customer asked what it looks like. Numbered callouts rather than labels
+   baked into the SVG, so the text reflows on a phone instead of shrinking to
+   nothing. Honest about being a concept — they're pre-ordering, and pretending
+   to have a finished photograph would be the wrong kind of confidence. */
+
+const CONCEPT_PARTS = [
+  ["Light strip", "Runs the length of the strap. Glows on milestone evenings, or steady for night walks."],
+  ["Weatherproof webbing", "Rain and puddles. Stitched edges, not glued."],
+  ["Cast metal buckle", "Side-release, with a keeper loop so the tail doesn't flap."],
+  ["Engraved brass tag", "Their name on one side, yours and a number on the other."],
+  ["USB-C charging", "About 60 days between charges on milestones alone."],
+];
+
+function Concept() {
+  return (
+    <div className="bd-concept">
+      <div className="bd-concept-art">
+        <svg viewBox="0 0 440 250" role="img"
+          aria-label="Concept drawing of the Bond collar laid flat, with five numbered parts labelled below">
+          <defs>
+            <linearGradient id="cWeb" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#40584A" /><stop offset=".45" stopColor="#2E4137" />
+              <stop offset="1" stopColor="#1B2A22" />
+            </linearGradient>
+            <linearGradient id="cMetal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#D8C68F" /><stop offset=".5" stopColor="#9E8A54" />
+              <stop offset="1" stopColor="#6E5F38" />
+            </linearGradient>
+            <linearGradient id="cBrass" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#EDD189" /><stop offset=".36" stopColor="#CBA044" />
+              <stop offset=".7" stopColor="#A67B23" /><stop offset="1" stopColor="#DEBD66" />
+            </linearGradient>
+            <filter id="cLit" x="-40%" y="-200%" width="180%" height="500%">
+              <feGaussianBlur stdDeviation="6" result="b" />
+              <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+          </defs>
+
+          <rect x="26" y="72" width="388" height="36" rx="18" fill="url(#cWeb)" />
+          <line x1="44" y1="81" x2="396" y2="81" stroke="#5A7263" strokeWidth="1.4" strokeDasharray="5 5" opacity=".8" />
+          <line x1="44" y1="99" x2="396" y2="99" stroke="#5A7263" strokeWidth="1.4" strokeDasharray="5 5" opacity=".8" />
+          <line x1="48" y1="90" x2="392" y2="90" stroke="#D9A441" strokeWidth="6"
+            strokeLinecap="round" filter="url(#cLit)" />
+
+          <rect x="86" y="62" width="46" height="56" rx="9" fill="none" stroke="url(#cMetal)" strokeWidth="7" />
+          <line x1="109" y1="62" x2="109" y2="118" stroke="url(#cMetal)" strokeWidth="6" />
+          <line x1="109" y1="90" x2="150" y2="90" stroke="url(#cMetal)" strokeWidth="5" strokeLinecap="round" />
+          <rect x="170" y="68" width="15" height="44" rx="6" fill="none" stroke="#4A6153" strokeWidth="5" />
+          {[248, 274, 300, 326].map((x) => <circle key={x} cx={x} cy="90" r="4" fill="#131F19" opacity=".55" />)}
+
+          <path d="M272 108 a17 17 0 0 0 34 0" fill="none" stroke="url(#cMetal)" strokeWidth="6" />
+          <rect x="258" y="134" width="62" height="60" rx="13" fill="url(#cBrass)" />
+          <circle cx="289" cy="145" r="4.5" fill="#16241D" />
+          <text x="289" y="180" textAnchor="middle" className="bd-art-num">58</text>
+
+          {/* USB-C port at the tail */}
+          <rect x="382" y="83" width="18" height="14" rx="7" fill="none" stroke="#4A6153" strokeWidth="3" />
+
+          {/* numbered callouts */}
+          {[[210, 52, "1"], [66, 128, "2"], [109, 44, "3"], [330, 164, "4"], [404, 56, "5"]].map(([x, y, n]) => (
+            <g key={n}>
+              <circle cx={x} cy={y} r="12" fill="#D9A441" />
+              <text x={x} y={y + 5} textAnchor="middle" className="bd-callout">{n}</text>
+            </g>
+          ))}
+          <line x1="210" y1="64" x2="210" y2="80" stroke="#D9A441" strokeWidth="1.5" />
+          <line x1="76" y1="120" x2="92" y2="104" stroke="#D9A441" strokeWidth="1.5" />
+          <line x1="109" y1="56" x2="109" y2="62" stroke="#D9A441" strokeWidth="1.5" />
+          <line x1="322" y1="164" x2="310" y2="164" stroke="#D9A441" strokeWidth="1.5" />
+          <line x1="398" y1="66" x2="391" y2="82" stroke="#D9A441" strokeWidth="1.5" />
+        </svg>
+        <p className="bd-concept-note">
+          Concept drawing. The finished collar will differ in the details — we'll show you
+          photographs of the real thing before anyone is charged.
+        </p>
+      </div>
+      <ol className="bd-parts">
+        {CONCEPT_PARTS.map(([t, d], i) => (
+          <li key={t}><span>{i + 1}</span><div><b>{t}</b><em>{d}</em></div></li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 /* --- Landing -------------------------------------------------------------- */
 
 function Landing({ onTry }) {
@@ -475,6 +561,7 @@ function Landing({ onTry }) {
           everyone else can see it. No buzzing, no notification to dismiss. The dog just walks
           into the kitchen glowing and you remember to make a fuss.
         </p>
+        <Concept />
         <div className="bd-two">
           <div className="bd-feat">
             <h3>Every other night, it's a safety light</h3>
@@ -567,8 +654,9 @@ function Landing({ onTry }) {
           </div></li>
           <li><span>3</span><div>
             <h3>The collar lights up on the day</h3>
-            <p>Three hours from dusk, in the colour for that kind of day. You get about eight
-              evenings a year with a dog. Twelve with an opossum.</p>
+            <p>Three hours from dusk, in the colour that tells you which kind of day it is.
+              A dog reaches about eight of these in a year — so the collar lights up on about
+              eight evenings. An opossum reaches twelve.</p>
           </div></li>
         </ol>
         <div className="bd-try">
@@ -651,7 +739,7 @@ function Footer({ onHome }) {
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           <a href="/privacy">Privacy</a>
           <span>Free US shipping · 30-day returns</span>
-          <span>© {new Date().getFullYear()} Bond</span>
+          <span>© {new Date().getFullYear()} Bond Collars LLC</span>
         </div>
       </div>
     </footer>
@@ -1095,6 +1183,22 @@ function Styles() {
   letter-spacing:-0.01em; }
 .bd-feat p{ font-size:14.5px; line-height:1.62; color:var(--lichen); margin:0; }
 
+/* product concept */
+.bd-concept{ display:grid; grid-template-columns:1.15fr .85fr; gap:30px; align-items:start;
+  background:var(--pine); border:1px solid var(--line); border-radius:16px; padding:26px;
+  margin:6px 0 34px; }
+.bd-concept-art svg{ width:100%; display:block; }
+.bd-callout{ font-family:'Karla',sans-serif; font-size:13px; font-weight:700; fill:#1A1305; }
+.bd-concept-note{ font-size:11.5px; line-height:1.55; color:var(--dim); margin:10px 0 0;
+  font-style:italic; }
+.bd-parts{ list-style:none; margin:0; padding:0; }
+.bd-parts li{ display:flex; gap:12px; padding:0 0 15px; }
+.bd-parts li>span{ width:22px; height:22px; border-radius:50%; background:var(--brass);
+  color:#1A1305; font-size:12px; font-weight:700; display:flex; align-items:center;
+  justify-content:center; flex:none; margin-top:1px; }
+.bd-parts b{ display:block; font-size:14.5px; font-weight:600; margin-bottom:2px; }
+.bd-parts em{ font-style:normal; font-size:12.5px; line-height:1.55; color:var(--lichen); }
+
 /* two calendars */
 .bd-cals{ display:grid; grid-template-columns:1.1fr .9fr; gap:34px; margin-top:34px;
   align-items:start; }
@@ -1301,7 +1405,7 @@ function Styles() {
 
 /* responsive */
 @media (max-width:860px){
-  .bd-hero-in,.bd-two,.bd-cals,.bd-stats,.bd-sell{ grid-template-columns:1fr; }
+  .bd-hero-in,.bd-two,.bd-cals,.bd-stats,.bd-sell,.bd-concept{ grid-template-columns:1fr; }
   .bd-hero{ padding:36px 0 44px; }
   .bd-hero-art{ order:-1; margin-bottom:14px; }
   .bd-art{ max-width:230px; }
