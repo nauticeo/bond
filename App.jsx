@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Plus, X, Share2, Check, Trash2, ChevronLeft } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 
 /* ============================================================================
    BOND — MVP
@@ -306,6 +307,7 @@ export default function BondApp() {
         )}
       </div>
       {shareFor && <ShareCard {...shareFor} onClose={() => setShareFor(null)} />}
+      <Analytics />
     </div>
   );
 }
