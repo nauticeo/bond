@@ -9,7 +9,7 @@ import { Plus, X, Share2, Check, Trash2, ChevronLeft } from "lucide-react";
        const WAITLIST_URL = "https://tally.so/r/abc123";
    Until you do, the waitlist card stays hidden. Nothing else breaks.
    ------------------------------------------------------------------------- */
-const WAITLIST_URL = "";
+const WAITLIST_URL = "https://tally.so/r/J9b1zz";
 /* ------------------------------------------------------------------------- */
 
 /*  The engine below is unchanged and tested. Anchors it must hold:
