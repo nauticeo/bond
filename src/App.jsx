@@ -17,7 +17,7 @@ const CONTACT_EMAIL = "hello@bondcollar.com";
    Leave empty and you get the product drawing instead — which is fine, but a
    photo of an actual animal is what makes people feel something.
    ------------------------------------------------------------------------- */
-const HERO_PHOTO = "public/IMG_0918.JPG";
+const HERO_PHOTO = "IMG_0918.JPG";
 /* ------------------------------------------------------------------------- */
 
 /*  Engine — unchanged and tested. Anchors it must hold:
